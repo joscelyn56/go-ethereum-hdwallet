@@ -5,12 +5,8 @@ import (
 	"crypto/rand"
 	"errors"
 	"fmt"
-	"math/big"
-	"os"
-	"sync"
-
+	"github.com/btcsuite/btcd/btcutil/hdkeychain"
 	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcutil/hdkeychain"
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/accounts"
 	"github.com/ethereum/go-ethereum/common"
@@ -18,6 +14,9 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/tyler-smith/go-bip39"
+	"math/big"
+	"os"
+	"sync"
 )
 
 // DefaultRootDerivationPath is the root path to which custom derivation endpoints
@@ -282,7 +281,7 @@ func (w *Wallet) SignTx(account accounts.Account, tx *types.Transaction, chainID
 
 	signer := types.LatestSignerForChainID(chainID)
 
-  // Sign the transaction and verify the sender to avoid hardware fault surprises
+	// Sign the transaction and verify the sender to avoid hardware fault surprises
 	signedTx, err := types.SignTx(tx, signer, privateKey)
 	if err != nil {
 		return nil, err
